@@ -8,6 +8,7 @@ import Card from './card';
 const Home = (props) => {
 	const [data, setData] = useState('');
 	const [pageNum, setPageNum] = useState(0);
+	
 
 	useEffect(() => {
 		let page = pageNum * 20;
