@@ -1,0 +1,11 @@
+.prev_btn {
+	float: left;
+}
+
+.next_btn {
+	float: right;
+}
+
+.search {
+	display: inline !important;
+}
