@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import Select from 'react-select';
 import axios from 'axios';
 import './home.css';
 import * as boot from 'react-bootstrap';
@@ -8,7 +9,10 @@ import Card from './card';
 const Home = (props) => {
 	const [data, setData] = useState('');
 	const [pageNum, setPageNum] = useState(0);
-	
+	const [names, setNames] = useState();
+	// const [search, setSearch] = useState('');
+	const [searchCard, setSearchCard] = useState(false);
+	const [searchurl, setSearchurl] = useState('');
 
 	useEffect(() => {
 		let page = pageNum * 20;
@@ -27,20 +31,44 @@ const Home = (props) => {
 			});
 	}, [pageNum]);
 
-	console.log(data);
+	useEffect(() => {
+		let url = 'https://pokeapi.co/api/v2/pokemon?offset=0&limit=200';
+		axios
+			.get(url)
+			.then(function (response) {
+				// handle success
+				console.log(response);
+
+				let items = response.data.results.map((res, i) => {
+					return { value: res.name, label: res.name };
+				});
+				setNames(items);
+			})
+			.catch(function (error) {
+				// handle error
+				console.log(error);
+			});
+	}, []);
+
+	const handleSearch = (e) => {
+		console.log(e);
+		setSearchCard(true);
+
+		setSearchurl('https://pokeapi.co/api/v2/pokemon/' + e.value);
+	};
+
 	return (
 		<>
 			<div className='container text-center'>
 				<div className='row mt-5'>
 					<div className='col-lg-8'>
-						<boot.Form.Control
+						<Select options={names} onChange={(e) => handleSearch(e)} />
+						{/* <boot.Form.Control
 							type='text'
 							placeholder='Search your Pokemone...'
 							className='w-auto search'
-						/>
-						<boot.Button variant='primary' className='w-auto mx-3'>
-							Search
-						</boot.Button>
+							onChange={(e) => setSearch(e.target.value)}
+						/> */}
 					</div>
 					<div className='col-lg-4'>
 						<boot.Form.Select aria-label='Default select example'>
@@ -51,31 +79,50 @@ const Home = (props) => {
 						</boot.Form.Select>
 					</div>
 				</div>
-				<div className='row my-5'>
-					{/* {console.log(data.results)} */}
-					{data.results?.map((item) => (
-						<>
+				{searchCard === true ? (
+					<>
+						<div className='row my-5'>
 							<div className='col-lg-4 my-3'>
-								<Card url={item.url} />
+								<Card url={searchurl} />
 							</div>
-						</>
-					))}
-				</div>
-				<div className='pb-5'>
-					<boot.Button
-						variant='primary'
-						className='w-auto prev_btn'
-						onClick={() => setPageNum(pageNum - 1)}
-						disabled={pageNum === 0 ? true : false}>
-						Previous
-					</boot.Button>
-					<boot.Button
-						variant='primary'
-						className='w-auto next_btn'
-						onClick={() => setPageNum(pageNum + 1)}>
-						Next
-					</boot.Button>
-				</div>
+						</div>
+						<boot.Button
+							variant='danger'
+							className='w-auto next_btn'
+							onClick={() => setSearchCard(false)}>
+							close
+						</boot.Button>
+					</>
+				) : (
+					<>
+						<div className='row my-5'>
+							{/* {console.log(data.results)} */}
+							{data.results?.map((item, idx) => (
+								<>
+									<div key={idx} className='col-lg-4 my-3'>
+										<Card url={item.url} />
+									</div>
+								</>
+							))}
+						</div>
+
+						<div className='pb-5'>
+							<boot.Button
+								variant='primary'
+								className='w-auto prev_btn'
+								onClick={() => setPageNum(pageNum - 1)}
+								disabled={pageNum === 0 ? true : false}>
+								Previous
+							</boot.Button>
+							<boot.Button
+								variant='primary'
+								className='w-auto next_btn'
+								onClick={() => setPageNum(pageNum + 1)}>
+								Next
+							</boot.Button>
+						</div>
+					</>
+				)}
 			</div>
 		</>
 	);

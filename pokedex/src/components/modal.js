@@ -34,8 +34,8 @@ const modal = (props) => {
 								</li>
 								<li>
 									<strong>Abilities: </strong>
-									{props.data.abilities?.map((item) => (
-										<span>{item.ability.name}, </span>
+									{props.data.abilities?.map((item, idx) => (
+										<span key={idx}>{item.ability.name}, </span>
 									))}
 								</li>
 							</ul>

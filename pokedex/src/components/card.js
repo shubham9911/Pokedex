@@ -41,8 +41,8 @@ const Card = ({ url }) => {
 							</li>
 							<li>
 								<strong>Type: </strong>
-								{data.types?.map((item) => (
-									<span>{item.type.name}, </span>
+								{data.types?.map((item, idx) => (
+									<span key={idx}>{item.type.name}, </span>
 								))}
 							</li>
 						</ul>
