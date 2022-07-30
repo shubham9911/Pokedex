@@ -19,10 +19,10 @@ const modal = (props) => {
 			<Modal.Body>
 				<div className='container-fluid'>
 					<div className='row'>
-						<div className='col-lg-6'>
+						<div className='col-lg-6 col-sm-12'>
 							<img className='main_img' src={props.image} alt='poki' />
 						</div>
-						<div className='col-lg-6'>
+						<div className='col-lg-6 col-sm-12'>
 							<ul>
 								<li>
 									<strong>Height: </strong>

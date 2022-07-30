@@ -61,8 +61,12 @@ const Home = (props) => {
 		<>
 			<div className='container text-center'>
 				<div className='row mt-5'>
-					<div className='col-lg-8'>
-						<Select options={names} onChange={(e) => handleSearch(e)} />
+					<div className='col-lg-8 col-sm-12 my-2'>
+						<Select
+							options={names}
+							onChange={(e) => handleSearch(e)}
+							placeholder={<div>Search your Pokemone..</div>}
+						/>
 						{/* <boot.Form.Control
 							type='text'
 							placeholder='Search your Pokemone...'
@@ -70,7 +74,7 @@ const Home = (props) => {
 							onChange={(e) => setSearch(e.target.value)}
 						/> */}
 					</div>
-					<div className='col-lg-4'>
+					<div className='col-lg-4 col-sm-12 my-2'>
 						<boot.Form.Select aria-label='Default select example'>
 							<option>Select Type</option>
 							<option value='1'>One</option>
@@ -82,7 +86,7 @@ const Home = (props) => {
 				{searchCard === true ? (
 					<>
 						<div className='row my-5'>
-							<div className='col-lg-4 my-3'>
+							<div className='col-lg-4 col-sm-12 my-3'>
 								<Card url={searchurl} />
 							</div>
 						</div>
@@ -99,7 +103,7 @@ const Home = (props) => {
 							{/* {console.log(data.results)} */}
 							{data.results?.map((item, idx) => (
 								<>
-									<div key={idx} className='col-lg-4 my-3'>
+									<div key={idx} className='col-lg-4 col-sm-12 my-3'>
 										<Card url={item.url} />
 									</div>
 								</>
